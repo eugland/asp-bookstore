@@ -1,11 +1,16 @@
 ﻿using BookStore.DBContext;
 using BookStore.Model;
-using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookStore.Service;
 
-public class BookService(DBContext.BookStoreDbContext Ctx)
+public class BookService(BookStoreDbContext Ctx)
 {
+    
+    public DbSet<Book> GetBook()
+    {
+        return Ctx.Books;
+    }
 
     public Book? GetBookById(int id)
     {

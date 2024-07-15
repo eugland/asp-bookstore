@@ -1,7 +1,6 @@
 ﻿using BookStore.Model;
 using BookStore.Service;
 using Microsoft.AspNetCore.Mvc;
-using System.Reflection.Metadata.Ecma335;
 
 namespace BookStore.Controller;
 
@@ -11,14 +10,29 @@ public class BookController (BookService bookService) : ControllerBase
 {
 
     [HttpGet]
-    public IResult GetBooks([FromQuery]string? Title, [FromQuery]string? Author)
+    public IResult GetBooks(
+        [FromQuery]string? Title, 
+        [FromQuery]string? Author, 
+        [FromQuery]int? minPrice, 
+        [FromQuery]int? maxPrice,
+        [FromQuery]bool? inStock,
+        [FromQuery]int? minRating,
+        [FromQuery]int? maxRating,
+        [FromQuery]int? year)
     {
-        
-        if (Title != null)
-        {
-            
-        }
-        var books = bookService.GetBooks().ToList();
+
+        Func<Book, bool> filter = book =>
+        (string.IsNullOrEmpty(Author) || book.Author.Contains(Author)) &&
+        (string.IsNullOrEmpty(Title) || book.Title.Contains(Title)) &&
+        (!year.HasValue || book.Year == year) &&
+        (!minPrice.HasValue || book.Price >= minPrice) &&
+        (!maxPrice.HasValue || book.Price <= maxPrice) &&
+        (!minRating.HasValue || book.Rating >= minRating) &&
+        (!maxRating.HasValue || book.Rating <= maxRating) &&
+        (!inStock.HasValue || (inStock.Value && book.Stock > 0));
+
+
+        var books = bookService.GetBooks().Where(filter);
         if (books == null)
         {
             return TypedResults.NotFound("The BookShelf is Empty, try adding a book!");

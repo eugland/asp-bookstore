@@ -29,3 +29,4 @@ C:\Users\eugen\source\repos\BookStore\BookStore\bin\Debug\net8.0\Microsoft.Entit
 C:\Users\eugen\source\repos\BookStore\BookStore\obj\Debug\net8.0\BookStore.csproj.AssemblyReference.cache
 C:\Users\eugen\source\repos\BookStore\BookStore\obj\Debug\net8.0\BookStore.csproj.Up2Date
 C:\Users\eugen\source\repos\BookStore\BookStore\bin\Debug\net8.0\Data\books.json
+C:\Users\eugen\source\repos\BookStore\BookStore\obj\Debug\net8.0\BookStore.sourcelink.json
